@@ -3,17 +3,12 @@ var app         = express();
 var bodyParser  = require('body-parser');
 var mathsolver  = require("./mathsolver.js");
 var calcmetrics = require("./calcmetrics.js");
-var xray        = require('aws-xray-sdk');
 var querystring = require('querystring');
 var shortid     = require('shortid');
+var http = require('http');
 
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
-
-xray.middleware.setSamplingRules('sampling-rules.json');
-var http = xray.captureHTTPs(require('http'));
-
-app.use(xray.express.openSegment(serviceName));
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -48,16 +43,13 @@ router.post("/calc", function(req, res) {
 
     console.log(`calcid: ${calcid}, infix: ${infix}`);
     
-    var seg = xray.getSegment();
-    seg.addAnnotation('calcid', calcid);
-    
     const postData = querystring.stringify({
         'calcid': calcid,
         'expression': infix
     });
 
     const options = {
-        hostname: '172.19.0.200',
+        hostname: 'localhost',
         port: 9090,
         path: '/api/postfix/',
         method: 'POST',
@@ -100,24 +92,13 @@ router.post("/calc", function(req, res) {
                 res.write(`power call count: ${stats.powerCount}\n`);                
                 res.write(`ANSWER = ${result}\n`);
                                                     
-                seg.addMetadata("infix", infix);
-                seg.addMetadata("postfix", postfix);
-                seg.addMetadata("result", result);
-
                 var responseCode = 200;
                 var random = Math.random();
 
                 //randomize response code
-                if (random < 0.8) {
-                    //GREEN
-                    responseCode = 200;
-                } else if (random < 0.9) {
-                    //ORANGE
-                    responseCode = 403;
-                } else {
-                    //RED
-                    responseCode = 503;
-                }
+                if (random < 0.8) {responseCode = 200;}
+                else if (random < 0.9) {responseCode = 403;}
+                else {responseCode = 503;}
 
                 res.statusCode = responseCode;
                 res.end();
@@ -137,8 +118,6 @@ router.post("/calc", function(req, res) {
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', router);
-
-app.use(xray.express.closeSegment());
 
 // START THE SERVER
 // =============================================================================
@@ -161,7 +140,6 @@ console.log(`${exampleExpression3}`);
 console.log(`${exampleExpression4}`);
 console.log(`${exampleExpression5}`);
 console.log(`${exampleExpression6}`);
-console.log("note: the optional calcid param will be added as an annotation to the xray trace")
 console.log("********************************************");
 console.log("********************************************");
 

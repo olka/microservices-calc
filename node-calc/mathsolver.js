@@ -1,8 +1,4 @@
-var XRay = require('aws-xray-sdk');
-
-XRay.middleware.setSamplingRules('sampling-rules.json');
-//XRay.middleware.enableDynamicNaming();
-var http = XRay.captureHTTPs(require('http'));
+var http = require('http');
 
 String.prototype.isNumeric = function() {
     return !isNaN(parseFloat(this)) && isFinite(this);
@@ -98,35 +94,35 @@ function calculate(stats, calcid, postfix, i, resultStack, callback){
         if(postfix[i] === "+") {
             stats.additionCount++;
             options = {
-                hostname: '172.19.10.1',
+                hostname: 'localhost',
                 port: 8081,
                 path: `/api/add?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };
         } else if(postfix[i] === "-") {
             stats.subtractCount++;
             options = {
-                hostname: '172.19.10.2',
+                hostname: 'localhost',
                 port: 8082,
                 path: `/api/subtract?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };
         } else if(postfix[i] === "*") {
             stats.multiplyCount++;
             options = {
-                hostname: '172.19.10.3',
+                hostname: 'localhost',
                 port: 8083,
                 path: `/api/multiply?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };            
         } else if(postfix[i] === "/") {
             stats.divideCount++;
             options = {
-                hostname: '172.19.10.4',
+                hostname: 'localhost',
                 port: 8084,
                 path: `/api/divide?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };            
         } else if(postfix[i] === "^") {
             stats.powerCount++;
             options = {
-                hostname: '172.19.10.5',
+                hostname: 'localhost',
                 port: 8085,
                 path: `/api/power?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };            
