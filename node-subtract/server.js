@@ -1,6 +1,8 @@
+
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
+var utils       = require('../node-calc-core/utils');
 
 var serviceName = "SUBTRACT";
 var servicePort = 8082;
@@ -30,17 +32,7 @@ router.get("/subtract", function(req, res) {
     var result = Number(left) - Number(right);
     console.log(`${left}-${right}=${result}`);
     res.write(result.toString());
-
-    var responseCode = 200;
-    var random = Math.random();
-
-    //randomize response code
-    if (random < 0.8) { responseCode = 200;}
-    else if (random < 0.9) {responseCode = 403;}
-    else { responseCode = 503;}
-
-
-    res.statusCode = responseCode;    
+    res.statusCode = utils.randomizeResponseCode();
     res.end();
 
     var params = {

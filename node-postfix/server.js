@@ -1,6 +1,7 @@
 var express     = require('express');        // call express
 var app         = express();                 // define our app using express
 var bodyParser  = require('body-parser');
+var utils       = require('../node-calc-core/utils');
 var mathsolver  = require("./mathsolver.js");
 
 var serviceName = "POSTFIX";
@@ -30,16 +31,8 @@ router.post("/postfix", function(req, res) {
     var postfix = mathsolver.infixToPostfix(infix).trim();
     console.log(`${serviceName}->calcid: ${calcid}, postfix: ${postfix}`);
     res.write(postfix);
-    
-    var responseCode = 200;
-    var random = Math.random();
 
-    //randomize response code
-    if (random < 0.8) {responseCode = 200;}
-    else if (random < 0.9) {responseCode = 403;}
-    else {responseCode = 503;}
-
-    res.statusCode = responseCode;
+    res.statusCode = utils.randomizeResponseCode();
     res.end();
 
     var params = {

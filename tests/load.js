@@ -9,8 +9,8 @@ export let options = {
         "errors": ["rate<0.01"], // <1% errors
         http_req_duration: ["avg<100", "p(95)<800"]
     },
-    vus: 30,
-    duration: "30s"
+    vus: 2,
+    duration: "180s"
     // stages: [
     //     {duration: "30s", target: 50},
     //     {duration: "2m", vus: 110}
@@ -20,12 +20,12 @@ export let options = {
 export default function () {
     let payload = {
         calcid: 1234,
-        expression: "3^2+((5*5-1)/2)"
+        expression: "(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))"
     };
     let res = http.post("http://localhost:8080/api/calc/", payload);
     check(res, {
         "status was 200": (r) => r.status == 200,
         // "body contains result": (r) => r.body.indexOf("result") !== -1,
-        "ANSWER = 21": (r) => r.body.indexOf("ANSWER = 21") !== -1
+        "ANSWER = 43.8": (r) => r.body.indexOf("ANSWER = 43.8") !== -1
     }) || errorRate.add(1);
 };

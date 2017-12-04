@@ -5,10 +5,35 @@ var mathsolver  = require("./mathsolver.js");
 var calcmetrics = require("./calcmetrics.js");
 var querystring = require('querystring');
 var shortid     = require('shortid');
-var http = require('http');
+var http        = require('http');
+let CLSContext  = require('zipkin-context-cls');
+const {Tracer}  = require('zipkin');
+const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
+
+const {HttpLogger} = require('zipkin-transport-http');
+const {
+    BatchRecorder,
+    jsonEncoder: {JSON_V2}
+} = require('zipkin');
+
+// Send spans to Zipkin asynchronously over HTTP
+const zipkinBaseUrl = 'http://localhost:9411';
+const recorder = new BatchRecorder({
+    logger: new HttpLogger({
+        endpoint: `${zipkinBaseUrl}/api/v2/spans`,
+        jsonEncoder: JSON_V2
+    })
+});
+
 
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
+
+const ctxImpl = new CLSContext('zipkin');
+const tracer = new Tracer({ctxImpl, recorder, serviceName});
+// instrument the server
+
+app.use(zipkinMiddleware({tracer}));
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
