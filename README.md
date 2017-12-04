@@ -1,6 +1,7 @@
-# AWS X-Ray Microservices Calculator
-
-![Alt text](documentation/ServiceMap.png?raw=true "Amazon X-Ray Console Service Map")
+https://www.carlhopf.com/blog/2016/09/11/nodejs-cpu-profiling-production/
+stackvis perf flamegraph-svg < out.nodestacks > collapsed.svg
+./FlameGraph/stackcollapse-perf.pl --pid 3034 < out.nodestacks | ../FlameGraph/flamegraph.pl --color=js --hash  > out.nodestacks.svg
+https://github.com/thlorenz/flamegraph
 
 ## Architecture
 
@@ -75,7 +76,7 @@ This project has been successfully tested on:
     1. `AWSXrayWriteOnlyAccess`
     2. `AmazonSQSFullAccess`
 
-Notes: 
+Notes:
 AWSXrayWriteOnlyAccess
 ```javascript
 {
@@ -167,10 +168,10 @@ SUBTRACT    | npm info using npm@4.2.0
 SUBTRACT    | npm info using node@v7.10.0
 SUBTRACT    | npm info lifecycle node-api@~prestart: node-api@
 SUBTRACT    | npm info lifecycle node-api@~start: node-api@
-SUBTRACT    | 
+SUBTRACT    |
 SUBTRACT    | > node-api@ start /usr/src/app
 SUBTRACT    | > node server.js
-SUBTRACT    | 
+SUBTRACT    |
 SUBTRACT    | SUBTRACT service listening on port: 8082
 DIVIDE      | npm info it worked if it ends with ok
 XRAY        | 2017-05-09T08:44:53+12:00 [Info] Initializing AWS X-Ray daemon 1.0.1
@@ -192,35 +193,35 @@ MULTIPLY    | npm info lifecycle node-api@~prestart: node-api@
 ADD         | npm info using npm@4.2.0
 POSTIX      | npm info using node@v7.10.0
 POSTIX      | npm info lifecycle node-api@~prestart: node-api@
-POWER       | 
+POWER       |
 MULTIPLY    | npm info lifecycle node-api@~start: node-api@
-MULTIPLY    | 
+MULTIPLY    |
 MULTIPLY    | > node-api@ start /usr/src/app
 MULTIPLY    | > node server.js
 POSTIX      | npm info lifecycle node-api@~start: node-api@
 POWER       | > node-api@ start /usr/src/app
 POWER       | > node server.js
-POWER       | 
-MULTIPLY    | 
+POWER       |
+MULTIPLY    |
 ADD         | npm info using node@v7.10.0
 DIVIDE      | npm info using node@v7.10.0
 DIVIDE      | npm info lifecycle node-api@~prestart: node-api@
 DIVIDE      | npm info lifecycle node-api@~start: node-api@
-DIVIDE      | 
+DIVIDE      |
 DIVIDE      | > node-api@ start /usr/src/app
 DIVIDE      | > node server.js
-DIVIDE      | 
-POSTIX      | 
+DIVIDE      |
+POSTIX      |
 DIVIDE      | DIVIDE service listening on port: 8084
 POSTIX      | > node-api@ start /usr/src/app
 POSTIX      | > node server.js
-POSTIX      | 
+POSTIX      |
 ADD         | npm info lifecycle node-api@~prestart: node-api@
 ADD         | npm info lifecycle node-api@~start: node-api@
-ADD         | 
+ADD         |
 ADD         | > node-api@ start /usr/src/app
 ADD         | > node server.js
-ADD         | 
+ADD         |
 ADD         | ADD service listening on port: 8081
 MULTIPLY    | MULTIPLY service listening on port: 8083
 POWER       | POWER service listening on port: 8085
@@ -230,10 +231,10 @@ CALC        | npm info using node@v7.10.0
 POSTIX      | POSTFIX service listening on port: 9090
 CALC        | npm info lifecycle node-api@~prestart: node-api@
 CALC        | npm info lifecycle node-api@~start: node-api@
-CALC        | 
+CALC        |
 CALC        | > node-api@ start /usr/src/app
 CALC        | > node server.js
-CALC        | 
+CALC        |
 CALC        | CALCULATOR service listening on port: 8080
 CALC        | ********************************************
 CALC        | ********************************************
@@ -317,7 +318,7 @@ XRAY        | 2017-05-09T08:52:21+12:00 [Info] Successfully sent batch of 5 segm
     5. `SUBTRACT`: returns result of 1st number minus 2nd number
     6. `MULTIPLY`: returns result of 1st number multiplied by 2nd number
     7. `DIVIDE`: returns result of 1st number divided by second number
-    8. `POWER`: returns result of the 1st number (base) raised by the 2 number (exponent) 
+    8. `POWER`: returns result of the 1st number (base) raised by the 2 number (exponent)
 
 4. Each docker container in the solution has been designed to return a percentage of HTTP error codes, e.g. *400s* and/or *500s*. The error codes returned have no effect on the outcome of the full calculation - this still calculates normally. The error codes are intentionally returned to demonstrate how they are rendered within the AWS X-Ray Service Map and Trace views. The following code snippet highlights this:
 
