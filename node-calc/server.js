@@ -1,3 +1,4 @@
+
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
@@ -6,34 +7,13 @@ var calcmetrics = require("./calcmetrics.js");
 var querystring = require('querystring');
 var shortid     = require('shortid');
 var http        = require('http');
-let CLSContext  = require('zipkin-context-cls');
-const {Tracer}  = require('zipkin');
-const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
-
-const {HttpLogger} = require('zipkin-transport-http');
-const {
-    BatchRecorder,
-    jsonEncoder: {JSON_V2}
-} = require('zipkin');
-
-// Send spans to Zipkin asynchronously over HTTP
-const zipkinBaseUrl = 'http://localhost:9411';
-const recorder = new BatchRecorder({
-    logger: new HttpLogger({
-        endpoint: `${zipkinBaseUrl}/api/v2/spans`,
-        jsonEncoder: JSON_V2
-    })
-});
-
+var prometheus      = require('prom-client');
 
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
 
-const ctxImpl = new CLSContext('zipkin');
-const tracer = new Tracer({ctxImpl, recorder, serviceName});
-// instrument the server
-
-app.use(zipkinMiddleware({tracer}));
+const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+collectDefaultMetrics({ timeout: 5000 });
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -83,6 +63,13 @@ router.post("/calc", function(req, res) {
             'Content-Length': Buffer.byteLength(postData)
         }
     };
+
+    const summary = new prometheus.Summary({
+        name: 'calc_handler',
+        help: 'metric_help',
+        percentiles: [0.01, 0.1, 0.5, 0.75, 0.95, 0.99]
+    });
+    const observeDuration = summary.startTimer();
   
     const httpreq = http.request(options, (httpres) => {
         console.log(`STATUS: ${httpres.statusCode}`);
@@ -131,6 +118,7 @@ router.post("/calc", function(req, res) {
         });
     });
 
+    observeDuration();
     httpreq.on('error', (e) => {
         console.error(`problem with request: ${e.message}`);
     });
@@ -139,6 +127,11 @@ router.post("/calc", function(req, res) {
     httpreq.write(postData);
     httpreq.end();
 });
+
+router.get('/metrics', (req, res) => {
+    res.set('Content-Type', prometheus.register.contentType)
+    res.end(prometheus.register.metrics())
+})
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
