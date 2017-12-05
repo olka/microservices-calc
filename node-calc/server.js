@@ -31,7 +31,16 @@ router.get('/', function(req, res) {
     res.json({ message: `welcome from the ${serviceName} service` });
 });
 
+
+var summary = new prometheus.Summary({
+    name: 'calc_handler',
+    help: 'metric_help'
+});
+
+
 router.post("/calc", function(req, res) {
+    var observeDuration = summary.startTimer();
+
     var infix = req.body.expression;
     var calcid = req.body.calcid;
 
@@ -63,13 +72,6 @@ router.post("/calc", function(req, res) {
             'Content-Length': Buffer.byteLength(postData)
         }
     };
-
-    const summary = new prometheus.Summary({
-        name: 'calc_handler',
-        help: 'metric_help',
-        percentiles: [0.01, 0.1, 0.5, 0.75, 0.95, 0.99]
-    });
-    const observeDuration = summary.startTimer();
   
     const httpreq = http.request(options, (httpres) => {
         console.log(`STATUS: ${httpres.statusCode}`);
@@ -114,11 +116,11 @@ router.post("/calc", function(req, res) {
 
                 res.statusCode = responseCode;
                 res.end();
+                observeDuration();
             });
         });
     });
 
-    observeDuration();
     httpreq.on('error', (e) => {
         console.error(`problem with request: ${e.message}`);
     });

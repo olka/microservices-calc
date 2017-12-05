@@ -6,6 +6,7 @@
   "scripts": {
     "start": "pm2 start node-add/server.js --node-args=\"--perf_basic_prof\" --name \"add\" && pm2 start node-calc/server.js --node-args=\"--perf_basic_prof\" --name \"entrypoint\" && pm2 start node-divide/server.js --node-args=\"--perf_basic_prof\" --name \"divide\" && pm2 start node-multiply/server.js --node-args=\"--perf_basic_prof\" --name \"multiply\" && pm2 start  node-postfix/server.js --node-args=\"--perf_basic_prof\" --name \"postfix\" && pm2 start node-subtract/server.js --node-args=\"--perf_basic_prof\" --name \"subtract\" && pm2 start node-power/server.js --node-args=\"--perf_basic_prof\" --name \"power\"",
     "stop": "pm2 delete add && pm2 delete entrypoint && pm2 delete divide && pm2 delete power && pm2 delete multiply && pm2 delete subtract && pm2 delete postfix",
+    "load": "k6 run tests/load.js",
     "install": "cd node-add && npm install && cd ../node-calc && npm install && cd ../node-divide && npm install && cd ../node-multiply && npm install && cd ../node-postfix && npm install && cd ../node-subtract && npm install && cd ../node-power && npm install"
   },
   "dependencies": {
