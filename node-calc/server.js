@@ -12,8 +12,8 @@ var prometheus      = require('prom-client');
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
 
-const collectDefaultMetrics = prometheus.collectDefaultMetrics;
-collectDefaultMetrics({ timeout: 5000 });
+// const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+// collectDefaultMetrics({ timeout: 5000 });
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -32,14 +32,14 @@ router.get('/', function(req, res) {
 });
 
 
-var summary = new prometheus.Summary({
-    name: 'calc_handler',
-    help: 'metric_help'
-});
+// var summary = new prometheus.Summary({
+//     name: 'calc_handler',
+//     help: 'metric_help'
+// });
 
 
 router.post("/calc", function(req, res) {
-    var observeDuration = summary.startTimer();
+    // var observeDuration = summary.startTimer();
 
     var infix = req.body.expression;
     var calcid = req.body.calcid;
@@ -116,7 +116,7 @@ router.post("/calc", function(req, res) {
 
                 res.statusCode = responseCode;
                 res.end();
-                observeDuration();
+                // observeDuration();
             });
         });
     });
@@ -130,10 +130,10 @@ router.post("/calc", function(req, res) {
     httpreq.end();
 });
 
-router.get('/metrics', (req, res) => {
-    res.set('Content-Type', prometheus.register.contentType)
-    res.end(prometheus.register.metrics())
-})
+// router.get('/metrics', (req, res) => {
+//     res.set('Content-Type', prometheus.register.contentType)
+//     res.end(prometheus.register.metrics())
+// })
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
