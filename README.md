@@ -4,6 +4,10 @@ stackvis perf flamegraph-svg < out.nodestacks > collapsed.svg
 ./FlameGraph/stackcollapse-perf.pl < out.nodestacks
 https://github.com/thlorenz/flamegraph
 
+
+for dir in ./node*; do (cd "$dir" && npm install pino --save); done
+
+
 ## Architecture
 
 ![Alt text](documentation/XRayDockerArch.png?raw=true "AWS X-Ray Microservices Calculator")

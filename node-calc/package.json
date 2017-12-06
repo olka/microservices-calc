@@ -8,6 +8,8 @@
     "body-parser": "~1.0.1",
     "express": "^4.14.0",
     "mongoose": "~3.6.13",
+    "pino": "^4.10.2",
+    "prom-client": "^10.2.2",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "shortid": "^2.2.8",
@@ -15,7 +17,6 @@
     "zipkin": "^0.11.1",
     "zipkin-context-cls": "^0.11.0",
     "zipkin-instrumentation-express": "^0.11.1",
-    "zipkin-transport-http": "^0.11.1",
-    "prom-client": "^10.2.2"
+    "zipkin-transport-http": "^0.11.1"
   }
 }

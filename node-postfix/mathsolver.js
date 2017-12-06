@@ -1,4 +1,5 @@
 var rp = require('request-promise');
+var pino = require('pino')()
 
 String.prototype.isNumeric = function() {
     return !isNaN(parseFloat(this)) && isFinite(this);
@@ -73,7 +74,7 @@ module.exports = {
         postfix = postfix.split(" ");
         var i = 0;
         calculate(postfix, i, resultStack, function(result){
-            console.log(result);
+            pino.info(result);
             callback(result);
         });
     }
@@ -141,7 +142,7 @@ function calculate(postfix, i, resultStack, callback){
     rp(options)
         .then(function (data) {
             var result = parseInt(data);
-            console.log(result);
+            pino.info(result);
             resultStack.push(result);
 
             i = i + 1;
@@ -153,7 +154,7 @@ function calculate(postfix, i, resultStack, callback){
                     return "error";
                 } else {
                     var resultVal = resultStack.pop();
-                    console.log(resultVal);
+                    pino.info(resultVal);
                     callback(resultVal);
                     return;
                 }

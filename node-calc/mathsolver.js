@@ -1,4 +1,5 @@
 var http = require('http');
+var pino = require('pino')()
 
 String.prototype.isNumeric = function() {
     return !isNaN(parseFloat(this)) && isFinite(this);
@@ -128,10 +129,10 @@ function calculate(stats, calcid, postfix, i, resultStack, callback){
             };            
         }
 
-        console.log(`http request host:port -> ${options.hostname}:${options.port}`)
+        pino.info(`http request host:port -> ${options.hostname}:${options.port}`)
         const httpreq = http.request(options, (res) => {
-            console.log(`STATUS: ${res.statusCode}`);
-            //console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+            pino.info(`STATUS: ${res.statusCode}`);
+            //pino.info(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding('utf8');
             var data = '';
             res.on('data', (chunk) => {
@@ -139,7 +140,7 @@ function calculate(stats, calcid, postfix, i, resultStack, callback){
             });
             res.on('end', () => {
                 var result = data;
-                console.log(`result=${result}`);
+                pino.info(`result=${result}`);
                 resultStack.push(result);
 
                 i = i + 1;

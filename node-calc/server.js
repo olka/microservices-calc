@@ -7,7 +7,8 @@ var calcmetrics = require("./calcmetrics.js");
 var querystring = require('querystring');
 var shortid     = require('shortid');
 var http        = require('http');
-var prometheus      = require('prom-client');
+var prometheus  = require('prom-client');
+var pino        = require('pino')()
 
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
@@ -32,30 +33,30 @@ router.get('/', function(req, res) {
 });
 
 
-// var summary = new prometheus.Summary({
-//     name: 'calc_handler',
-//     help: 'metric_help'
-// });
+var summary = new prometheus.Summary({
+    name: 'calc_handler',
+    help: 'metric_help'
+});
 
 
 router.post("/calc", function(req, res) {
-    // var observeDuration = summary.startTimer();
+    var observeDuration = summary.startTimer();
 
     var infix = req.body.expression;
     var calcid = req.body.calcid;
 
-    console.log("=====================================");
-    console.log("Calculator entry point...");
+    pino.info("=====================================");
+    pino.info("Calculator entry point...");
 
     if (typeof calcid == "undefined") {    
         calcid = shortid.generate();
-        console.log(`generating new calcid: ${calcid}`);
+        pino.info(`generating new calcid: ${calcid}`);
     }
     else {
-        console.log(`calcid supplied: ${calcid}`);
+        pino.info(`calcid supplied: ${calcid}`);
     }
 
-    console.log(`calcid: ${calcid}, infix: ${infix}`);
+    pino.info(`calcid: ${calcid}, infix: ${infix}`);
     
     const postData = querystring.stringify({
         'calcid': calcid,
@@ -74,28 +75,28 @@ router.post("/calc", function(req, res) {
     };
   
     const httpreq = http.request(options, (httpres) => {
-        console.log(`STATUS: ${httpres.statusCode}`);
-        console.log(`HEADERS: ${JSON.stringify(httpres.headers)}`);
+        pino.info(`STATUS: ${httpres.statusCode}`);
+        pino.info(`HEADERS: ${JSON.stringify(httpres.headers)}`);
         httpres.setEncoding('utf8');
         var data = '';
         httpres.on('data', (chunk) => {
             data += chunk;
-            console.log(`BODY: ${chunk}`);
+            pino.info(`BODY: ${chunk}`);
         });
         httpres.on('end', () => {
-            //console.log('No more data in response.');
+            //pino.info('No more data in response.');
 
             var postfix = data;
-            console.log("postfix:" + postfix);
+            pino.info("postfix:" + postfix);
         
             var stats = new calcmetrics();
             mathsolver.solvePostfix(stats, calcid, postfix, function(result){
-                console.log("CALC RESULT=" + result);
-                console.log(`add count ${stats.additionCount}`);
-                console.log(`subtract count ${stats.subtractCount}`);
-                console.log(`multiply count ${stats.multiplyCount}`);
-                console.log(`divide count ${stats.divideCount}`);
-                console.log(`power count ${stats.powerCount}`);
+                pino.info("CALC RESULT=" + result);
+                pino.info(`add count ${stats.additionCount}`);
+                pino.info(`subtract count ${stats.subtractCount}`);
+                pino.info(`multiply count ${stats.multiplyCount}`);
+                pino.info(`divide count ${stats.divideCount}`);
+                pino.info(`power count ${stats.powerCount}`);
 
                 res.write(`infix: ${infix}\n`);
                 res.write(`postfix: ${postfix}\n`);                
@@ -116,7 +117,7 @@ router.post("/calc", function(req, res) {
 
                 res.statusCode = responseCode;
                 res.end();
-                // observeDuration();
+                observeDuration();
             });
         });
     });
@@ -142,7 +143,7 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-console.log(`${serviceName} service listening on port: ` + port);
+pino.info(`${serviceName} service listening on port: ` + port);
 
 var exampleExpression1 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=(5+3)/2\" http://localhost:8080/api/calc"
 var exampleExpression2 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=((5+3)/2)^3\" http://localhost:8080/api/calc"
@@ -151,17 +152,17 @@ var exampleExpression4 = "curl --data-urlencode \"calcid=1234\" --data-urlencode
 var exampleExpression5 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=(2*(9+22/5)-((9-1)/4)^2)\" http://localhost:8080/api/calc"
 var exampleExpression6 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))\" http://localhost:8080/api/calc"
 
-console.log("********************************************");
-console.log("********************************************");
-console.log("sample calculator test commands:");
-console.log(`${exampleExpression1}`);
-console.log(`${exampleExpression2}`);
-console.log(`${exampleExpression3}`);
-console.log(`${exampleExpression4}`);
-console.log(`${exampleExpression5}`);
-console.log(`${exampleExpression6}`);
-console.log("********************************************");
-console.log("********************************************");
+pino.info("********************************************");
+pino.info("********************************************");
+pino.info("sample calculator test commands:");
+pino.info(`${exampleExpression1}`);
+pino.info(`${exampleExpression2}`);
+pino.info(`${exampleExpression3}`);
+pino.info(`${exampleExpression4}`);
+pino.info(`${exampleExpression5}`);
+pino.info(`${exampleExpression6}`);
+pino.info("********************************************");
+pino.info("********************************************");
 
 
 

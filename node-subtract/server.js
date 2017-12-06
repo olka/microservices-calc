@@ -3,6 +3,7 @@ var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
 var utils       = require('../node-calc-core/utils');
+var pino        = require('pino')()
 
 var serviceName = "SUBTRACT";
 var servicePort = 8082;
@@ -24,13 +25,13 @@ router.get('/', function(req, res) {
 });
 
 router.get("/subtract", function(req, res) {
-    console.log("subtracting...");
+    pino.info("subtracting...");
     var calcid = req.query.calcId;    
     var left = req.query.leftOp;
     var right = req.query.rightOp;
 
     var result = Number(left) - Number(right);
-    console.log(`${left}-${right}=${result}`);
+    pino.info(`${left}-${right}=${result}`);
     res.write(result.toString());
     res.statusCode = utils.randomizeResponseCode();
     res.end();
@@ -62,4 +63,4 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-console.log(`${serviceName} service listening on port: ` + port);
+pino.info(`${serviceName} service listening on port: ` + port);

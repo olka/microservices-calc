@@ -3,6 +3,7 @@
   "main": "server.js",
   "dependencies": {
     "body-parser": "~1.0.1",
-    "express": "~4.0.0"
+    "express": "~4.0.0",
+    "pino": "^4.10.2"
   }
 }
