@@ -94,35 +94,35 @@ function calculate(stats, calcid, postfix, i, resultStack, callback){
         if(postfix[i] === "+") {
             stats.additionCount++;
             options = {
-                hostname: 'localhost',
+                hostname: '127.0.0.1',
                 port: 8081,
                 path: `/api/add?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };
         } else if(postfix[i] === "-") {
             stats.subtractCount++;
             options = {
-                hostname: 'localhost',
+                hostname: '127.0.0.1',
                 port: 8082,
                 path: `/api/subtract?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };
         } else if(postfix[i] === "*") {
             stats.multiplyCount++;
             options = {
-                hostname: 'localhost',
+                hostname: '127.0.0.1',
                 port: 8083,
                 path: `/api/multiply?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };            
         } else if(postfix[i] === "/") {
             stats.divideCount++;
             options = {
-                hostname: 'localhost',
+                hostname: '127.0.0.1',
                 port: 8084,
                 path: `/api/divide?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };            
         } else if(postfix[i] === "^") {
             stats.powerCount++;
             options = {
-                hostname: 'localhost',
+                hostname: '127.0.0.1',
                 port: 8085,
                 path: `/api/power?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };            
