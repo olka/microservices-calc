@@ -131,10 +131,10 @@ router.post("/calc", function(req, res) {
     httpreq.end();
 });
 
-// router.get('/metrics', (req, res) => {
-//     res.set('Content-Type', prometheus.register.contentType)
-//     res.end(prometheus.register.metrics())
-// })
+router.get('/metrics', (req, res) => {
+    res.set('Content-Type', prometheus.register.contentType)
+    res.end(prometheus.register.metrics())
+})
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
