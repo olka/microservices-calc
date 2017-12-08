@@ -129,9 +129,9 @@ function calculate(stats, calcid, postfix, i, resultStack, callback){
             };            
         }
 
-        pino.info(`http request host:port -> ${options.hostname}:${options.port}`)
+        // pino.info(`http request host:port -> ${options.hostname}:${options.port}`)
         const httpreq = http.request(options, (res) => {
-            pino.info(`STATUS: ${res.statusCode}`);
+            // pino.info(`STATUS: ${res.statusCode}`);
             //pino.info(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding('utf8');
             var data = '';
@@ -140,7 +140,7 @@ function calculate(stats, calcid, postfix, i, resultStack, callback){
             });
             res.on('end', () => {
                 var result = data;
-                pino.info(`result=${result}`);
+                // pino.info(`result=${result}`);
                 resultStack.push(result);
 
                 i = i + 1;

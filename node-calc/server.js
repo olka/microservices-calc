@@ -50,13 +50,13 @@ router.post("/calc", function(req, res) {
 
     if (typeof calcid == "undefined") {    
         calcid = shortid.generate();
-        pino.info(`generating new calcid: ${calcid}`);
+        // pino.info(`generating new calcid: ${calcid}`);
     }
     else {
-        pino.info(`calcid supplied: ${calcid}`);
+        // pino.info(`calcid supplied: ${calcid}`);
     }
 
-    pino.info(`calcid: ${calcid}, infix: ${infix}`);
+    // pino.info(`calcid: ${calcid}, infix: ${infix}`);
     
     const postData = querystring.stringify({
         'calcid': calcid,
@@ -75,28 +75,28 @@ router.post("/calc", function(req, res) {
     };
   
     const httpreq = http.request(options, (httpres) => {
-        pino.info(`STATUS: ${httpres.statusCode}`);
-        pino.info(`HEADERS: ${JSON.stringify(httpres.headers)}`);
+        // pino.info(`STATUS: ${httpres.statusCode}`);
+        // pino.info(`HEADERS: ${JSON.stringify(httpres.headers)}`);
         httpres.setEncoding('utf8');
         var data = '';
         httpres.on('data', (chunk) => {
             data += chunk;
-            pino.info(`BODY: ${chunk}`);
+            // pino.info(`BODY: ${chunk}`);
         });
         httpres.on('end', () => {
             //pino.info('No more data in response.');
 
             var postfix = data;
-            pino.info("postfix:" + postfix);
+            // pino.info("postfix:" + postfix);
         
             var stats = new calcmetrics();
             mathsolver.solvePostfix(stats, calcid, postfix, function(result){
-                pino.info("CALC RESULT=" + result);
-                pino.info(`add count ${stats.additionCount}`);
-                pino.info(`subtract count ${stats.subtractCount}`);
-                pino.info(`multiply count ${stats.multiplyCount}`);
-                pino.info(`divide count ${stats.divideCount}`);
-                pino.info(`power count ${stats.powerCount}`);
+                // pino.info("CALC RESULT=" + result);
+                // pino.info(`add count ${stats.additionCount}`);
+                // pino.info(`subtract count ${stats.subtractCount}`);
+                // pino.info(`multiply count ${stats.multiplyCount}`);
+                // pino.info(`divide count ${stats.divideCount}`);
+                // pino.info(`power count ${stats.powerCount}`);
 
                 res.write(`infix: ${infix}\n`);
                 res.write(`postfix: ${postfix}\n`);                
