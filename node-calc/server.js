@@ -1,7 +1,6 @@
 
 var express     = require('express');
 var app         = express();
-var bodyParser  = require('body-parser');
 var mathsolver  = require("./mathsolver.js");
 var calcmetrics = require("./calcmetrics.js");
 var querystring = require('querystring');
@@ -18,8 +17,6 @@ collectDefaultMetrics({ timeout: 5000 });
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 var port = process.env.PORT || servicePort;
 
