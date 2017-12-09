@@ -77,7 +77,7 @@ router.post("/calc", function(req, res) {
     const httpreq = http.request(options, (httpres) => {
         // pino.info(`STATUS: ${httpres.statusCode}`);
         // pino.info(`HEADERS: ${JSON.stringify(httpres.headers)}`);
-        httpres.setEncoding('utf8');
+        // httpres.setEncoding('utf8');
         var data = '';
         httpres.on('data', (chunk) => {
             data += chunk;
