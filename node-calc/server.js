@@ -7,7 +7,7 @@ var calcmetrics = require("./calcmetrics.js");
 var querystring = require('querystring');
 var shortid     = require('shortid');
 var http        = require('http');
-var prometheus  = require('prom-client');
+// var prometheus  = require('prom-client');
 var pino        = require('pino')()
 
 var serviceName = "CALCULATOR";
@@ -24,8 +24,8 @@ app.use(function(req,res,next){
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const collectDefaultMetrics = prometheus.collectDefaultMetrics;
-collectDefaultMetrics({ timeout: 5000 });
+// const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+// collectDefaultMetrics({ timeout: 5000 });
 
 var port = process.env.PORT || servicePort;
 
@@ -39,14 +39,14 @@ router.get('/', function(req, res) {
 });
 
 
-var summary = new prometheus.Summary({
-    name: 'calc_handler',
-    help: 'metric_help'
-});
+// var summary = new prometheus.Summary({
+//     name: 'calc_handler',
+//     help: 'metric_help'
+// });
 
 
 router.post("/calc", function(req, res) {
-    var observeDuration = summary.startTimer();
+    // var observeDuration = summary.startTimer();
 
     var infix = req.body.expression;
     var calcid = req.body.calcid;
@@ -123,7 +123,7 @@ router.post("/calc", function(req, res) {
 
                 res.statusCode = responseCode;
                 res.end();
-                observeDuration();
+                // observeDuration();
             });
         });
     });
@@ -137,10 +137,10 @@ router.post("/calc", function(req, res) {
     httpreq.end();
 });
 
-router.get('/metrics', (req, res) => {
-    res.set('Content-Type', prometheus.register.contentType)
-    res.end(prometheus.register.metrics())
-})
+// router.get('/metrics', (req, res) => {
+//     res.set('Content-Type', prometheus.register.contentType)
+//     res.end(prometheus.register.metrics())
+// })
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
