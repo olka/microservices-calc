@@ -13,8 +13,8 @@ var pino        = require('pino')()
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
 
-// const collectDefaultMetrics = prometheus.collectDefaultMetrics;
-// collectDefaultMetrics({ timeout: 5000 });
+const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+collectDefaultMetrics({ timeout: 5000 });
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST

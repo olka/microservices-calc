@@ -133,7 +133,7 @@ function calculate(stats, calcid, postfix, i, resultStack, callback){
         const httpreq = http.request(options, (res) => {
             // pino.info(`STATUS: ${res.statusCode}`);
             //pino.info(`HEADERS: ${JSON.stringify(res.headers)}`);
-            res.setEncoding('utf8');
+            // res.setEncoding('utf8');
             var data = '';
             res.on('data', (chunk) => {
                 data += chunk;

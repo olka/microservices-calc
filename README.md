@@ -5,7 +5,7 @@ stackvis perf flamegraph-svg < out.nodestacks > collapsed.svg
 https://github.com/thlorenz/flamegraph
 
 
-for dir in ./node*; do (cd "$dir" && npm install pino --save); done
+for dir in ./node-*; do (cd "$dir" && node --perf_basic_prof server.js  > /dev/null &); done
 
 
 ## Architecture
