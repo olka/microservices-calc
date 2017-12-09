@@ -1,6 +1,7 @@
 
 var express     = require('express');
 var app         = express();
+var bodyParser  = require('body-parser');
 var mathsolver  = require("./mathsolver.js");
 var calcmetrics = require("./calcmetrics.js");
 var querystring = require('querystring');
@@ -12,11 +13,19 @@ var pino        = require('pino')()
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
 
-const collectDefaultMetrics = prometheus.collectDefaultMetrics;
-collectDefaultMetrics({ timeout: 5000 });
+
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
+app.use(function(req,res,next){
+    req.connection.setNoDelay(true);
+    next();
+});
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+const collectDefaultMetrics = prometheus.collectDefaultMetrics;
+collectDefaultMetrics({ timeout: 5000 });
 
 var port = process.env.PORT || servicePort;
 
