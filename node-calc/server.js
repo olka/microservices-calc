@@ -21,6 +21,7 @@ app.use(function(req,res,next){
     req.connection.setNoDelay(true);
     next();
 });
+app.disable('etag').disable('x-powered-by');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
