@@ -4,17 +4,13 @@ services:
     build:
       context: ./node-calc
       dockerfile: ./Dockerfile
-    depends_on:
-      - add
-      - subtract
-      - multiply
-      - divide
-      - power
-      - postfix
     container_name: CALC
     image: node-calc
     ports:
       - "8080:8080"
+    networks:
+      calcnet:
+        ipv4_address: 172.19.0.100
 
   postfix:
     build:
@@ -24,6 +20,9 @@ services:
     image: node-postfix
     ports:
       - "9090:9090"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.0.200
 
   add:
     build:
@@ -33,6 +32,9 @@ services:
     image: node-add
     ports:
       - "8081:8081"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.1
 
   subtract:
     build:
@@ -42,6 +44,9 @@ services:
     image: node-subtract
     ports:
       - "8082:8082"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.2
 
   multiply:
     build:
@@ -51,6 +56,9 @@ services:
     image: node-multiply
     ports:
       - "8083:8083"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.3
 
   divide:
     build:
@@ -60,6 +68,9 @@ services:
     image: node-divide
     ports:
       - "8084:8084"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.4
 
   power:
     build:
@@ -69,3 +80,14 @@ services:
     image: node-power
     ports:
       - "8085:8085"  
+    networks:
+      calcnet:
+        ipv4_address: 172.19.10.5
+
+networks:
+  calcnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/16

@@ -95,7 +95,7 @@ function calculate(postfix, i, resultStack, callback){
         if(postfix[i] === "+") {
             //resultStack.push(parseInt(a) + parseInt(b));
             var options = {
-                uri: 'http://127.0.0.1:8081/api/add/',
+                uri: 'http://172.19.10.1:8081/api/add/',
                 qs: {
                     leftOp: left,
                     rightOp: right
@@ -104,7 +104,7 @@ function calculate(postfix, i, resultStack, callback){
         } else if(postfix[i] === "-") {
             //resultStack.push(parseInt(b) - parseInt(a));
             var options = {
-                uri: 'http://127.0.0.1:8082/api/subtract/',
+                uri: 'http://172.19.10.2:8082/api/subtract/',
                 qs: {
                     leftOp: right,
                     rightOp: left
@@ -113,7 +113,7 @@ function calculate(postfix, i, resultStack, callback){
         } else if(postfix[i] === "*") {
             //resultStack.push(parseInt(a) * parseInt(b));
             var options = {
-                uri: 'http://127.0.0.1:8083/api/multiply/',
+                uri: 'http://172.19.10.3:8083/api/multiply/',
                 qs: {
                     leftOp: left,
                     rightOp: right
@@ -122,7 +122,7 @@ function calculate(postfix, i, resultStack, callback){
         } else if(postfix[i] === "/") {
             //resultStack.push(parseInt(b) / parseInt(a));
             var options = {
-                uri: 'http://127.0.0.1:8084/api/divide/',
+                uri: 'http://172.19.10.4:8084/api/divide/',
                 qs: {
                     leftOp: right,
                     rightOp: left
@@ -131,7 +131,7 @@ function calculate(postfix, i, resultStack, callback){
         } else if(postfix[i] === "^") {
             //resultStack.push(Math.pow(parseInt(b), parseInt(a)));
             var options = {
-                uri: 'http://127.0.0.1:8085/api/power/',
+                uri: 'http://172.19.10.5:8085/api/power/',
                 qs: {
                     leftOp: right,
                     rightOp: left
