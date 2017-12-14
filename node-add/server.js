@@ -1,7 +1,6 @@
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
-var utils       = require('../node-calc-core/utils');
 var pino        = require('pino')()
 
 var serviceName = "ADD";
@@ -33,7 +32,7 @@ router.get("/add", function(req, res) {
     pino.info(`${left}+${right}=${result}`);
     res.write(result.toString());
 
-    res.statusCode = utils.randomizeResponseCode();
+    res.statusCode = 200;
     res.end();
 
     var params = {

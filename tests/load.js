@@ -9,13 +9,13 @@ export let options = {
         "errors": ["rate<0.01"], // <1% errors
         http_req_duration: ["avg<100", "p(95)<800"]
     },
-    vus: 50,
-    duration: "30s"
+    vus: 90,
+    duration: "15s"
     // stages: [
-    //     {duration: "10s", target: 5},
-    //     {duration: "20s", target: 10},
-    //     {duration: "30s", target: 15},
-    //     {duration: "30s", target: 20}
+    //     {duration: "10s", target: 10},
+    //     {duration: "25s", target: 30},
+    //     {duration: "30s", target: 50},
+    //     {duration: "40s", target: 80}
     // ]
 };
 

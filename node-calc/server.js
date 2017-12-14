@@ -170,13 +170,3 @@ pino.info(`${exampleExpression5}`);
 pino.info(`${exampleExpression6}`);
 pino.info("********************************************");
 pino.info("********************************************");
-
-
-
-
-
-
-
-
-
-

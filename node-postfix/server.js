@@ -1,7 +1,7 @@
 var express     = require('express');        // call express
 var app         = express();                 // define our app using express
 var bodyParser  = require('body-parser');
-var utils       = require('../node-calc-core/utils');
+// var utils       = require('../node-calc-core/utils');
 var mathsolver  = require("./mathsolver.js");
 var pino        = require('pino')()
 
@@ -33,7 +33,7 @@ router.post("/postfix", function(req, res) {
     pino.info(`${serviceName}->calcid: ${calcid}, postfix: ${postfix}`);
     res.write(postfix);
 
-    res.statusCode = utils.randomizeResponseCode();
+    res.statusCode = 200;
     res.end();
 
     var params = {
