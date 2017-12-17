@@ -2,7 +2,6 @@ var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
 // var utils       = require('../node-calc-core/utils');
-var pino        = require('pino')()
 
 var serviceName = "MULTIPLY";
 var servicePort = 8083;
@@ -24,13 +23,11 @@ router.get('/', function(req, res) {
 });
 
 router.get("/multiply", function(req, res) {
-    pino.info("multiplying...");
     var calcid = req.query.calcId;
     var left = req.query.leftOp;
     var right = req.query.rightOp;
 
     var result = Number(left) * Number(right);
-    pino.info(`${left}*${right}=${result}`);
     res.write(result.toString());
 
     res.statusCode = 200;
@@ -63,4 +60,4 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-pino.info(`${serviceName} service listening on port: ` + port);
+console.log(`${serviceName} service listening on port: ` + port);

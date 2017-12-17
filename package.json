@@ -4,13 +4,15 @@
   "description": "perf test bench",
   "license": "MIT",
   "scripts": {
-    "pm2start": "pm2 start node-add/server.js --node-args=\"--perf_basic_prof\" --name \"add\" && pm2 start node-calc/server.js --node-args=\"--perf_basic_prof\" --name \"entrypoint\" && pm2 start node-divide/server.js --node-args=\"--perf_basic_prof\" --name \"divide\" && pm2 start node-multiply/server.js --node-args=\"--perf_basic_prof\" --name \"multiply\" && pm2 start  node-postfix/server.js --node-args=\"--perf_basic_prof\" --name \"postfix\" && pm2 start node-subtract/server.js --node-args=\"--perf_basic_prof\" --name \"subtract\" && pm2 start node-power/server.js --node-args=\"--perf_basic_prof\" --name \"power\"",
-    "start": "for dir in ./node-*; do (cd \"$dir\" && node --perf_basic_prof server.js  > /dev/null &); done",
+    "start": "for dir in ./node-*; do (cd \"$dir\" && node server.js &); done",
+    "start-perf": "for dir in ./node-*; do (cd \"$dir\" && node --perf_basic_prof server.js &); done",
+    "docker-build": "for dir in node-*; do (cd \"$dir\" && docker build -t gcr.io/${PROJECT_ID}/$dir:v1 .); done",
+    "push-to-gcloud": "for dir in node-*; do (gcloud docker -- push gcr.io/${PROJECT_ID}/$dir); done",
     "stop": "killall node",
+    "clean": "for dir in ./node-*; do (cd \"$dir\" && rm -rf node_modules && rm *.lock.json); done",
+    "k8-deployments": "cd k8s; for dep in *-deployment.yaml; do (kubectl apply -f $dep); done",
+    "k8-services": "cd k8s; for serv in *-service.yaml; do (kubectl apply -f $serv); done",
     "load": "k6 run tests/load.js",
     "install": "cd node-add && npm install && cd ../node-calc && npm install && cd ../node-divide && npm install && cd ../node-multiply && npm install && cd ../node-postfix && npm install && cd ../node-subtract && npm install && cd ../node-power && npm install"
-  },
-  "dependencies": {
-    "pm2": "^2.4.6"
   }
 }

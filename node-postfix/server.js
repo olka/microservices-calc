@@ -3,7 +3,6 @@ var app         = express();                 // define our app using express
 var bodyParser  = require('body-parser');
 // var utils       = require('../node-calc-core/utils');
 var mathsolver  = require("./mathsolver.js");
-var pino        = require('pino')()
 
 var serviceName = "POSTFIX";
 var servicePort = 9090;
@@ -27,10 +26,7 @@ router.get('/', function(req, res) {
 router.post("/postfix", function(req, res) {
     var calcid = req.body.calcid;
     var infix = req.body.expression;
-
-    pino.info(`${serviceName}->calcid: ${calcid}, infix: ${infix}`);
     var postfix = mathsolver.infixToPostfix(infix).trim();
-    pino.info(`${serviceName}->calcid: ${calcid}, postfix: ${postfix}`);
     res.write(postfix);
 
     res.statusCode = 200;
@@ -59,4 +55,4 @@ app.use('/api', router);
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-pino.info(`${serviceName} service listening on port: ` + port);
+console.log(`${serviceName} service listening on port: ` + port);

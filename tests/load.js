@@ -9,14 +9,14 @@ export let options = {
         "errors": ["rate<0.01"], // <1% errors
         http_req_duration: ["avg<100", "p(95)<800"]
     },
-    vus: 90,
-    duration: "15s"
-    // stages: [
-    //     {duration: "10s", target: 10},
-    //     {duration: "25s", target: 30},
-    //     {duration: "30s", target: 50},
-    //     {duration: "40s", target: 80}
-    // ]
+    // vus: 60,
+    // duration: "125s"
+    stages: [
+        {duration: "10s", target: 10},
+        {duration: "35s", target: 30},
+        {duration: "50s", target: 50},
+        {duration: "60s", target: 80}
+    ]
 };
 
 export default function () {
@@ -24,7 +24,7 @@ export default function () {
         calcid: 1234,
         expression: "(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))"
     };
-    let res = http.post("http://localhost:8080/api/calc/", payload);
+    let res = http.post("http://35.225.188.184:8080/api/calc", payload);
     check(res, {
         "status was 200": (r) => r.status == 200,
         // "body contains result": (r) => r.body.indexOf("result") !== -1,
