@@ -12,12 +12,6 @@ var serviceName = "CALCULATOR";
 var servicePort = 8080;
 let postfixUrl = process.env.POSTFIX_URL || '172.19.0.200';
 
-// configure app to use bodyParser()
-// this will let us get the data from a POST
-app.use(function(req,res,next){
-    req.connection.setNoDelay(true);
-    next();
-});
 app.disable('x-powered-by');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
