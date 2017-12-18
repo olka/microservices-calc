@@ -12,7 +12,6 @@
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "shortid": "^2.2.8",
-    "spdy": "^3.4.7",
     "stack-lifo": "^0.1.5",
     "zipkin": "^0.11.1",
     "zipkin-context-cls": "^0.11.0",

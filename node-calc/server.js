@@ -1,8 +1,5 @@
-
 var express     = require('express');
 var app         = express();
-const spdy      = require('spdy');
-const fs        = require('fs');
 var bodyParser  = require('body-parser');
 var mathsolver  = require("./mathsolver.js");
 var calcmetrics = require("./calcmetrics.js");
@@ -15,11 +12,8 @@ var serviceName = "CALCULATOR";
 var servicePort = 8080;
 let postfixUrl = process.env.POSTFIX_URL || '172.19.0.200';
 
-const certs = {
-    key: fs.readFileSync('res/server.key'),
-    cert:  fs.readFileSync('res/server.crt')
-  };
-
+// configure app to use bodyParser()
+// this will let us get the data from a POST
 app.use(function(req,res,next){
     req.connection.setNoDelay(true);
     next();
@@ -127,11 +121,9 @@ router.get('/metrics', (req, res) => {
 app.use('/api', router);
 
 // START THE SERVER
-http.createServer(app).listen(port, (err) => {
-  if (err) { throw new Error(err);}
-  console.log(`${serviceName} service listening on port: ` + port);
-});
-
+// =============================================================================
+app.listen(port);
+console.log(`${serviceName} service listening on port: ` + port);
 
 var exampleExpression1 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=(5+3)/2\" http://localhost:8080/api/calc"
 var exampleExpression2 = "curl --data-urlencode \"calcid=1234\" --data-urlencode \"expression=((5+3)/2)^3\" http://localhost:8080/api/calc"
