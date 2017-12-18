@@ -127,7 +127,7 @@ router.get('/metrics', (req, res) => {
 app.use('/api', router);
 
 // START THE SERVER
-spdy.createServer(certs, app).listen(port, (err) => {
+http.createServer(app).listen(port, (err) => {
   if (err) { throw new Error(err);}
   console.log(`${serviceName} service listening on port: ` + port);
 });
