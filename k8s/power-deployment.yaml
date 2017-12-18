@@ -1,0 +1,76 @@
+{
+  "kind": "Deployment",
+  "apiVersion": "extensions/v1beta1",
+  "metadata": {
+    "name": "node-power",
+    "namespace": "default",
+    "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/node-power",
+    "uid": "49d14d55-e254-11e7-a1ce-42010a80015a",
+    "resourceVersion": "145019",
+    "generation": 1,
+    "creationTimestamp": "2017-12-16T11:28:50Z",
+    "labels": {
+      "run": "node-power"
+    },
+    "annotations": {
+      "deployment.kubernetes.io/revision": "1"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "matchLabels": {
+        "run": "node-power"
+      }
+    },
+    "template": {
+      "metadata": {
+        "creationTimestamp": null,
+        "labels": {
+          "run": "node-power"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "node-power",
+            "image": "gcr.io/microservices-calc-188920/node-power:v1",
+            "resources": {},
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      }
+    },
+    "strategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {
+        "maxUnavailable": 1,
+        "maxSurge": 1
+      }
+    }
+  },
+  "status": {
+    "observedGeneration": 1,
+    "replicas": 1,
+    "updatedReplicas": 1,
+    "readyReplicas": 1,
+    "availableReplicas": 1,
+    "conditions": [
+      {
+        "type": "Available",
+        "status": "True",
+        "lastUpdateTime": "2017-12-16T11:28:50Z",
+        "lastTransitionTime": "2017-12-16T11:28:50Z",
+        "reason": "MinimumReplicasAvailable",
+        "message": "Deployment has minimum availability."
+      }
+    ]
+  }
+}

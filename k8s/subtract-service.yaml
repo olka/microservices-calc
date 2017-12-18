@@ -1,0 +1,32 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "node-subtract",
+    "namespace": "default",
+    "selfLink": "/api/v1/namespaces/default/services/node-subtract",
+    "resourceVersion": "147845",
+    "creationTimestamp": "2017-12-16T12:10:43Z",
+    "labels": {
+      "run": "node-subtract"
+    }
+  },
+  "spec": {
+    "ports": [
+      {
+        "protocol": "TCP",
+        "port": 8082,
+        "targetPort": 8082
+      }
+    ],
+    "selector": {
+      "run": "node-subtract"
+    },
+    "clusterIP": "172.19.10.2",
+    "type": "ClusterIP",
+    "sessionAffinity": "None"
+  },
+  "status": {
+    "loadBalancer": {}
+  }
+}

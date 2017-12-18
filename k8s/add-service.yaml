@@ -1,0 +1,31 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "node-add",
+    "namespace": "default",
+    "selfLink": "/api/v1/namespaces/default/services/node-add",
+    "resourceVersion": "147845",
+    "labels": {
+      "run": "node-add"
+    }
+  },
+  "spec": {
+    "ports": [
+      {
+        "protocol": "TCP",
+        "port": 8081,
+        "targetPort": 8081
+      }
+    ],
+    "selector": {
+      "run": "node-add"
+    },
+    "clusterIP": "172.19.10.1",
+    "type": "ClusterIP",
+    "sessionAffinity": "None"
+  },
+  "status": {
+    "loadBalancer": {}
+  }
+}

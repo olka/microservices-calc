@@ -1,0 +1,32 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "node-multiply",
+    "namespace": "default",
+    "selfLink": "/api/v1/namespaces/default/services/node-multiply",
+    "resourceVersion": "147845",
+    "creationTimestamp": "2017-12-16T12:10:43Z",
+    "labels": {
+      "run": "node-multiply"
+    }
+  },
+  "spec": {
+    "ports": [
+      {
+        "protocol": "TCP",
+        "port": 8083,
+        "targetPort": 8083
+      }
+    ],
+    "selector": {
+      "run": "node-multiply"
+    },
+    "clusterIP": "172.19.10.3",
+    "type": "ClusterIP",
+    "sessionAffinity": "None"
+  },
+  "status": {
+    "loadBalancer": {}
+  }
+}

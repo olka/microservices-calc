@@ -1,0 +1,40 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "node-calc",
+    "namespace": "default",
+    "selfLink": "/api/v1/namespaces/default/services/node-calc",
+    "uid": "e76b9b76-e255-11e7-a1ce-42010a80015a",
+    "resourceVersion": "146479",
+    "creationTimestamp": "2017-12-16T11:40:24Z",
+    "labels": {
+      "run": "node-calc"
+    }
+  },
+  "spec": {
+    "ports": [
+      {
+        "protocol": "TCP",
+        "port": 8080,
+        "targetPort": 8080
+      }
+    ],
+    "selector": {
+      "run": "node-calc"
+    },
+    "clusterIP": "172.19.0.100",
+    "type": "LoadBalancer",
+    "sessionAffinity": "None",
+    "externalTrafficPolicy": "Cluster"
+  },
+  "status": {
+    "loadBalancer": {
+      "ingress": [
+        {
+          "ip": "35.225.34.125"
+        }
+      ]
+    }
+  }
+}

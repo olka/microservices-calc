@@ -1,0 +1,76 @@
+{
+  "kind": "Deployment",
+  "apiVersion": "extensions/v1beta1",
+  "metadata": {
+    "name": "node-multiply",
+    "namespace": "default",
+    "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/node-multiply",
+    "uid": "365be6c5-e254-11e7-a1ce-42010a80015a",
+    "resourceVersion": "144971",
+    "generation": 1,
+    "creationTimestamp": "2017-12-16T11:28:17Z",
+    "labels": {
+      "run": "node-multiply"
+    },
+    "annotations": {
+      "deployment.kubernetes.io/revision": "1"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "matchLabels": {
+        "run": "node-multiply"
+      }
+    },
+    "template": {
+      "metadata": {
+        "creationTimestamp": null,
+        "labels": {
+          "run": "node-multiply"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "node-multiply",
+            "image": "gcr.io/microservices-calc-188920/node-multiply:v1",
+            "resources": {},
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "securityContext": {},
+        "schedulerName": "default-scheduler"
+      }
+    },
+    "strategy": {
+      "type": "RollingUpdate",
+      "rollingUpdate": {
+        "maxUnavailable": 1,
+        "maxSurge": 1
+      }
+    }
+  },
+  "status": {
+    "observedGeneration": 1,
+    "replicas": 1,
+    "updatedReplicas": 1,
+    "readyReplicas": 1,
+    "availableReplicas": 1,
+    "conditions": [
+      {
+        "type": "Available",
+        "status": "True",
+        "lastUpdateTime": "2017-12-16T11:28:17Z",
+        "lastTransitionTime": "2017-12-16T11:28:17Z",
+        "reason": "MinimumReplicasAvailable",
+        "message": "Deployment has minimum availability."
+      }
+    ]
+  }
+}
