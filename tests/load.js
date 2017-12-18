@@ -20,25 +20,26 @@ export let options = {
     // ]
 };
 
-// export default function () {
-//     let payload = {
-//         calcid: 1234,
-//         expression: "(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))"
-//     };
-//     let res = http.post("http://35.225.188.184:8080/api/calc", payload);
-//     check(res, {
-//         "status was 200": (r) => r.status == 200,
-//         // "body contains result": (r) => r.body.indexOf("result") !== -1,
-//         "ANSWER = 43.8": (r) => r.body.indexOf("ANSWER = 43.8") !== -1
-//     }) || errorRate.add(1);
-// };
-
-
-
 export default function () {
-    let res = http.get("https://127.0.0.1:8080/api");
+    let payload = {
+        calcid: 1234,
+        expression: "(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))"
+    };
+    // let res = http.post("https://35.225.188.184:8080/api/calc", payload);
+    let res = http.post("https://192.168.1.7:8080/api/calc", payload);
     check(res, {
         "status was 200": (r) => r.status == 200,
-        "CALCULATOR is present": (r) => r.body.indexOf("CALCULATOR") !== -1
+        // "body contains result": (r) => r.body.indexOf("result") !== -1,
+        "ANSWER = 43.8": (r) => r.body.indexOf("ANSWER = 43.8") !== -1
     }) || errorRate.add(1);
 };
+
+
+
+// export default function () {
+//     let res = http.get("https://127.0.0.1:8080/api");
+//     check(res, {
+//         "status was 200": (r) => r.status == 200,
+//         "CALCULATOR is present": (r) => r.body.indexOf("CALCULATOR") !== -1
+//     }) || errorRate.add(1);
+// };

@@ -1,5 +1,11 @@
 var rp = require('request-promise');
 
+let addUrl = process.env.ADD_URL || '172.19.10.1';
+let subtractUrl = process.env.SUB_URL || '172.19.10.2';
+let multiplyUrl = process.env.MUL_URL || '172.19.10.3';
+let divideUrl = process.env.DIVIDE_URL || '172.19.10.4';
+let powerUrl = process.env.POWER_URL || '172.19.10.5';
+
 String.prototype.isNumeric = function() {
     return !isNaN(parseFloat(this)) && isFinite(this);
 }
@@ -93,7 +99,7 @@ function calculate(postfix, i, resultStack, callback){
         if(postfix[i] === "+") {
             //resultStack.push(parseInt(a) + parseInt(b));
             var options = {
-                uri: 'http://172.19.10.1:8081/api/add/',
+                uri: 'http://'+addUrl+':8081/api/add/',
                 qs: {
                     leftOp: left,
                     rightOp: right
@@ -102,7 +108,7 @@ function calculate(postfix, i, resultStack, callback){
         } else if(postfix[i] === "-") {
             //resultStack.push(parseInt(b) - parseInt(a));
             var options = {
-                uri: 'http://172.19.10.2:8082/api/subtract/',
+                uri: 'http://'+subtractUrl+':8082/api/subtract/',
                 qs: {
                     leftOp: right,
                     rightOp: left
@@ -111,7 +117,7 @@ function calculate(postfix, i, resultStack, callback){
         } else if(postfix[i] === "*") {
             //resultStack.push(parseInt(a) * parseInt(b));
             var options = {
-                uri: 'http://172.19.10.3:8083/api/multiply/',
+                uri: 'http://'+multiplyUrl+':8083/api/multiply/',
                 qs: {
                     leftOp: left,
                     rightOp: right
@@ -120,7 +126,7 @@ function calculate(postfix, i, resultStack, callback){
         } else if(postfix[i] === "/") {
             //resultStack.push(parseInt(b) / parseInt(a));
             var options = {
-                uri: 'http://172.19.10.4:8084/api/divide/',
+                uri: 'http://'+divideUrl+':8084/api/divide/',
                 qs: {
                     leftOp: right,
                     rightOp: left
@@ -129,7 +135,7 @@ function calculate(postfix, i, resultStack, callback){
         } else if(postfix[i] === "^") {
             //resultStack.push(Math.pow(parseInt(b), parseInt(a)));
             var options = {
-                uri: 'http://172.19.10.5:8085/api/power/',
+                uri: 'http://'+powerUrl+':8085/api/power/',
                 qs: {
                     leftOp: right,
                     rightOp: left

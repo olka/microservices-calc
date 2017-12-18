@@ -1,5 +1,11 @@
 var http = require('http');
 
+let addUrl = process.env.ADD_URL || '172.19.10.1';
+let subtractUrl = process.env.SUB_URL || '172.19.10.2';
+let multiplyUrl = process.env.MUL_URL || '172.19.10.3';
+let divideUrl = process.env.DIVIDE_URL || '172.19.10.4';
+let powerUrl = process.env.POWER_URL || '172.19.10.5';
+
 String.prototype.isNumeric = function() {
     return !isNaN(parseFloat(this)) && isFinite(this);
 }
@@ -94,35 +100,35 @@ function calculate(stats, calcid, postfix, i, resultStack, callback){
         if(postfix[i] === "+") {
             stats.additionCount++;
             options = {
-                hostname: '172.19.10.1',
+                hostname: addUrl,
                 port: 8081,
                 path: `/api/add?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };
         } else if(postfix[i] === "-") {
             stats.subtractCount++;
             options = {
-                hostname: '172.19.10.2',
+                hostname: subtractUrl,
                 port: 8082,
                 path: `/api/subtract?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };
         } else if(postfix[i] === "*") {
             stats.multiplyCount++;
             options = {
-                hostname: '172.19.10.3',
+                hostname: multiplyUrl,
                 port: 8083,
                 path: `/api/multiply?calcId=${calcid}&leftOp=${left}&rightOp=${right}`
             };            
         } else if(postfix[i] === "/") {
             stats.divideCount++;
             options = {
-                hostname: '172.19.10.4',
+                hostname: divideUrl,
                 port: 8084,
                 path: `/api/divide?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };            
         } else if(postfix[i] === "^") {
             stats.powerCount++;
             options = {
-                hostname: '172.19.10.5',
+                hostname: powerUrl,
                 port: 8085,
                 path: `/api/power?calcId=${calcid}&leftOp=${right}&rightOp=${left}`
             };            

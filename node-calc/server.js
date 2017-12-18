@@ -13,6 +13,7 @@ var prometheus  = require('prom-client');
 
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
+let postfixUrl = process.env.POSTFIX_URL || '172.19.0.200';
 
 const certs = {
     key: fs.readFileSync('res/server.key'),
@@ -62,7 +63,7 @@ router.post("/calc", function(req, res) {
     });
 
     const options = {
-        hostname: '172.19.0.200',
+        hostname: postfixUrl,
         port: 9090,
         path: '/api/postfix/',
         method: 'POST',
