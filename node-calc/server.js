@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
-
+http.globalAgent.keepAlive = true;
 var port = process.env.PORT || servicePort;
 
 // ROUTES FOR OUR API

@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // set our port
+http.globalAgent.keepAlive = true;
 var port = process.env.PORT || servicePort;
 
 // ROUTES FOR OUR API

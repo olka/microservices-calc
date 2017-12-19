@@ -19,3 +19,9 @@ for dir in ./node-*; do (cd "$dir" && node --perf_basic_prof server.js  > /dev/n
 
 
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+
+
+offcpu
+sudo python offcpu -f -p 7932 > offcpu.stack
+cat offcpu.stack | ../FlameGraph/flamegraph.pl --color=js --hash  > node.svg
