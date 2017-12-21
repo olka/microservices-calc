@@ -11,7 +11,7 @@ var servicePort = 8083;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-http.globalAgent.keepAlive = true;
+// http.globalAgent.keepAlive = true;
 var port = process.env.PORT || servicePort;
 
 // ROUTES FOR OUR API

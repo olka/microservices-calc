@@ -6,6 +6,8 @@ let multiplyUrl = process.env.MUL_URL || '172.19.10.3';
 let divideUrl = process.env.DIVIDE_URL || '172.19.10.4';
 let powerUrl = process.env.POWER_URL || '172.19.10.5';
 
+http.globalAgent.keepAlive = true;
+
 String.prototype.isNumeric = function() {
     return !isNaN(parseFloat(this)) && isFinite(this);
 }

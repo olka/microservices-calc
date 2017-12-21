@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || servicePort;
-http.globalAgent.keepAlive = true;
+// http.globalAgent.keepAlive = true;
 
 // ROUTES FOR OUR API
 // =============================================================================
