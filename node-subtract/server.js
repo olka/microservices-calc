@@ -2,6 +2,7 @@
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
+var http        = require('http');
 // var utils       = require('../node-calc-core/utils');
 
 var serviceName = "SUBTRACT";
@@ -12,7 +13,7 @@ var servicePort = 8082;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// http.globalAgent.keepAlive = true;
+http.globalAgent.keepAlive = true;
 var port = process.env.PORT || servicePort;
 
 // ROUTES FOR OUR API

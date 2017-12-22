@@ -1,6 +1,7 @@
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
+var http        = require('http');
 // var utils       = require('../node-calc-core/utils');
 
 var serviceName = "DIVIDE";
@@ -12,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || servicePort;
-// http.globalAgent.keepAlive = true;
+http.globalAgent.keepAlive = true;
 
 // ROUTES FOR OUR API
 // =============================================================================

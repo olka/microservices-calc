@@ -1,6 +1,7 @@
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
+var http        = require('http');
 
 var serviceName = "ADD";
 var servicePort = 8081;
@@ -11,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // set our port
-// http.globalAgent.keepAlive = true;
+http.globalAgent.keepAlive = true;
 var port = process.env.PORT || servicePort;
 
 // ROUTES FOR OUR API
