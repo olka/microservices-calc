@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+
+<style>
+  .wrapper {
+    position: relative;
+  }
+  img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0.5;
+    max-width: 100%;
+  }
+  .slidecontainer {
+    text-align: left;
+  }
+.slider {
+    width: 7%; 
+    text-align: center;
+  }
+</style>
+
+<div class="wrapper" id="wrapper">
+  <img id="fi" src="">
+  <img id="si" src="">
+</div>
+
+<div class="slidecontainer">
+  <input name="fiinput" id="fiinput" type="file">
+  <input name="siinput" id="siinput" type="file">
+  <input type="range" min="1" max="100" value="50" class="slider" id="opacityRange">
+</div>
+
+<script>
+document.getElementById("opacityRange").oninput = function() {
+  document.getElementById("fi").style.opacity = 1-(0.01*this.value);
+  document.getElementById("si").style.opacity = 0.01*this.value;
+}
+document.getElementById("fiinput").addEventListener('change', function(){
+  document.getElementById("wrapper").style.height = "1000px";
+  document.getElementById("fi").src = this.files[0].name});
+document.getElementById("siinput").addEventListener('change', function(){
+  document.getElementById("wrapper").style.height = "1000px";
+  document.getElementById("si").src = this.files[0].name});
+</script>
+
+</body>
+</html>
