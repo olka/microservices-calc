@@ -1,0 +1,6 @@
+export POSTFIX_URL=127.0.0.1
+export ADD_URL=127.0.0.1
+export SUB_URL=127.0.0.1
+export MUL_URL=127.0.0.1
+export DIVIDE_URL=127.0.0.1
+export POWER_URL=127.0.0.1
