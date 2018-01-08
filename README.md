@@ -12,3 +12,15 @@ for dir in ./node-*; do (cd "$dir" && node --perf_basic_prof server.js  > /dev/n
 offcpu
 sudo python offcpu -f -p 7932 > offcpu.stack
 cat offcpu.stack | ../FlameGraph/flamegraph.pl --color=js --hash  > node.svg
+
+
+netutils/irqs
+https://github.com/strizhechenko/netutils-linux
+
+
+pv /dev/zero > /dev/null
+tinkerboard
+[2.54GiB/s]
+
+mac pro
+[16.0GiB/s]
