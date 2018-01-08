@@ -1,4 +1,5 @@
 #!/bin/bash
+#taken from https://poormansprofiler.org/
 nsamples=7
 sleeptime=0
 pid=$1
