@@ -13,16 +13,8 @@ var servicePort = 8080;
 let postfixUrl = process.env.POSTFIX_URL || '172.19.0.200';
 
 app.disable('x-powered-by');
-
-app.use(function(req, res, next){
-    var data = "";
-    req.on('data', function(chunk){ data += chunk})
-    req.on('end', function(){
-        console.log(data);
-        req.rawBody = JSON.parse(data);
-        next();
-    })
- })
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
@@ -50,9 +42,12 @@ var summary = new prometheus.Summary({
 router.post("/calc", function(req, res) {
     var observeDuration = summary.startTimer();
 
-    var infix = req.rawBody.expression;
-    
-    var calcid = shortid.generate();
+    var infix = req.body.expression;
+    var calcid = req.body.calcid;
+
+    if (typeof calcid == "undefined") {
+        calcid = shortid.generate();
+    }
     
     const postData = querystring.stringify({
         'calcid': calcid,
@@ -146,44 +141,3 @@ console.log(`${exampleExpression5}`);
 console.log(`${exampleExpression6}`);
 console.log("********************************************");
 console.log("********************************************");
-
-/****
- * 
- * var svr = http.createServer(function(req, resp) {
-   var body = "";
-  req.on('data', function (chunk) {
-    body += chunk;
-  });
-  req.on('end', function () {
-    console.log('body: ' + body);
-    var jsonObj = JSON.parse(body);
-  console.log(jsonObj.$key);
-  })
-    resp.end('Hello, World!');
-});
- */
-
-
- /**
-  * var qs = require('querystring');
-
-function (request, response) {
-    if (request.method == 'POST') {
-        var body = '';
-
-        request.on('data', function (data) {
-            body += data;
-
-            // Too much POST data, kill the connection!
-            // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
-            if (body.length > 1e6)
-                request.connection.destroy();
-        });
-
-        request.on('end', function () {
-            var post = qs.parse(body);
-            // use post['blah'], etc.
-        });
-    }
-}
-  */
