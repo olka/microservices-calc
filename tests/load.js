@@ -10,8 +10,8 @@ export let options = {
         http_req_duration: ["avg<100", "p(95)<800"]
     },
     insecureSkipTLSVerify: true,
-    vus: 60,
-    duration: "125s"
+    vus: 5,
+    duration: "60s"
     // stages: [
     //     {duration: "10s", target: 10},
     //     {duration: "35s", target: 30},
@@ -25,8 +25,7 @@ export default function () {
         calcid: 1234,
         expression: "(2*(9+22/5)-((9-1)/4)^2)+(3^2+((5*5-1)/2))"
     };
-    // let res = http.post("https://35.225.188.184:8080/api/calc", payload);
-    let res = http.post("https://192.168.1.7:8080/api/calc", payload);
+    let res = http.post("http://localhost:8080/api/calc", payload);
     check(res, {
         "status was 200": (r) => r.status == 200,
         // "body contains result": (r) => r.body.indexOf("result") !== -1,

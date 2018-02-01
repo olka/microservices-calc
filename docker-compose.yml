@@ -86,8 +86,9 @@ services:
 
 networks:
   calcnet:
-    driver: bridge
+    driver: macvlan
+    driver_opts:
+          parent: lo0
     ipam:
-      driver: default
       config:
         - subnet: 172.19.0.0/16
