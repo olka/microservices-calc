@@ -10,7 +10,7 @@ export let options = {
         http_req_duration: ["avg<100", "p(95)<800"]
     },
     insecureSkipTLSVerify: true,
-    vus: 5,
+    vus: 6,
     duration: "60s"
     // stages: [
     //     {duration: "10s", target: 10},

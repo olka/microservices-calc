@@ -6,7 +6,7 @@
   "scripts": {
     "start": "for dir in ./node-*; do (cd \"$dir\" && node server.js &); done",
     "start-perf": "for dir in ./node-*; do (cd \"$dir\" && node --perf_basic_prof server.js &); done",
-    "docker-build": "for dir in node-*; do (cd \"$dir\" && docker build -t gcr.io/${PROJECT_ID}/$dir:v1 .); done",
+    "docker-build": "for dir in node-*; do (cd \"$dir\" && docker build .); done",
     "push-to-gcloud": "for dir in node-*; do (gcloud docker -- push gcr.io/${PROJECT_ID}/$dir); done",
     "stop": "killall node",
     "clean": "for dir in ./node-*; do (cd \"$dir\" && rm -rf node_modules && rm *.lock.json); done",

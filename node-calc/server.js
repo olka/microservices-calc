@@ -10,7 +10,7 @@ var prometheus  = require('prom-client');
 
 var serviceName = "CALCULATOR";
 var servicePort = 8080;
-let postfixUrl = process.env.POSTFIX_URL || '172.19.0.200';
+let postfixUrl = "postfix";
 
 app.disable('x-powered-by');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 const collectDefaultMetrics = prometheus.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
 http.globalAgent.keepAlive = true;
+
 var port = process.env.PORT || servicePort;
 
 // ROUTES FOR OUR API

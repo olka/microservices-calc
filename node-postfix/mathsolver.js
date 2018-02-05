@@ -1,10 +1,10 @@
 var rp = require('request-promise');
 
-let addUrl = process.env.ADD_URL || '172.19.10.1';
-let subtractUrl = process.env.SUB_URL || '172.19.10.2';
-let multiplyUrl = process.env.MUL_URL || '172.19.10.3';
-let divideUrl = process.env.DIVIDE_URL || '172.19.10.4';
-let powerUrl = process.env.POWER_URL || '172.19.10.5';
+let addUrl = "add";
+let subtractUrl = "subtract";
+let multiplyUrl = "multiply";
+let divideUrl = "divide";
+let powerUrl = "power";
 
 String.prototype.isNumeric = function() {
     return !isNaN(parseFloat(this)) && isFinite(this);
